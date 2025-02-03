@@ -1,12 +1,51 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, Avatar } from "@mui/material";
+import React, { useState } from "react";
+import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import logo from '../assets/logo.png';
 
 const Header: React.FC = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
-        <AppBar sx={{ background:'#97B43C',}} position="fixed">
+        <AppBar sx={{ background: '#143E44' }} position="fixed">
             <Toolbar>
-                <Avatar src="https://w7.pngwing.com/pngs/2/979/png-transparent-dietary-supplement-herbal-center-energetic-nutrition-health-food-leaf-text.png" alt="Logo" sx={{ marginRight: 2 }} />
-                <Typography variant="h6" color="#037080"><b>Diet & Nutrition Module</b></Typography>
+                <Avatar src={logo} alt="Logo" sx={{ marginRight: 2, width: '55px', height: '55px' }} />
+                <Typography variant="h6" color="#fff"><b>Diet & Nutrition Module</b></Typography>
+                <IconButton
+                    edge="end"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleMenuClick}
+                    sx={{ ml: 'auto' }} // This will push the button to the right
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+                    <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
     );

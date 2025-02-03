@@ -8,14 +8,31 @@ import Patients from "./pages/Patients";
 import DietCharts from "./pages/DietCharts";
 import TemplateCreator from "./pages/TemplateCreator";
 import NutritionalAssessmentForm from "./pages/NutritionalAssessmentForm";
-
+import logo from './assets/logo-removebg.png'
 const App: React.FC = () => {
   return (
     <Router>
       <Header />
       <Box sx={{ display: "flex" }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, mt:9 }}>
+        <Box component="main" sx={{
+          flexGrow: 1,
+          p: 3,
+          mt: 9,
+          position: "relative",
+          "&::after": {
+            content: '""',
+            position: "fixed",
+            bottom: 0,
+            right: 0,
+            width: "200px", // Adjust size as needed
+            height: "200px",
+            backgroundImage: `url(${logo})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            opacity: 0.1, // Adjust shadow effect
+            pointerEvents: "none",
+          }, }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />

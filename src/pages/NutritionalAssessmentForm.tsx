@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     TextField,
     Checkbox,
@@ -14,6 +14,15 @@ import {
 } from "@mui/material";
 
 const PatientDietForm: React.FC = () => {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    const handleToggle = (option: string) => {
+        setSelected((prev) =>
+            prev.includes(option)
+                ? prev.filter((item) => item !== option) // Remove if already selected
+                : [...prev, option] // Add if not selected
+        );
+    };
     return (
         <Box sx={{ padding: '0px 20px' }}>
             <Typography variant="h6" color="#037080"><b> Nutritional Assessment Form</b></Typography>
@@ -62,12 +71,16 @@ const PatientDietForm: React.FC = () => {
                             <TableCell>Appetite</TableCell>
                             <TableCell>
                                 {["Normal", "Suppressed", "Increased"].map((option, idx) => (
-                                    <FormControlLabel
+                                    <Button
+                                        size="small"
                                         key={idx}
-                                        control={<Checkbox />}
-                                        label={option}
+                                        variant={selected.includes(option) ? "contained" : "outlined"}
+                                        color={selected.includes(option) ? "primary" : "inherit"}
+                                        onClick={() => handleToggle(option)}
                                         sx={{ mr: 2 }}
-                                    />
+                                    >
+                                        {option}
+                                    </Button>
                                 ))}
                             </TableCell>
                         </TableRow>
@@ -75,12 +88,16 @@ const PatientDietForm: React.FC = () => {
                             <TableCell>Symptoms</TableCell>
                             <TableCell>
                                 {["Anorexia", "Nausea", "Diarrhea", "Constipation"].map((option, idx) => (
-                                    <FormControlLabel
+                                    <Button
+                                        size="small"
                                         key={idx}
-                                        control={<Checkbox />}
-                                        label={option}
+                                        variant={selected.includes(option) ? "contained" : "outlined"}
+                                        color={selected.includes(option) ? "error" : "inherit"}
+                                        onClick={() => handleToggle(option)}
                                         sx={{ mr: 2 }}
-                                    />
+                                    >
+                                        {option}
+                                    </Button>
                                 ))}
                             </TableCell>
                         </TableRow>
@@ -96,13 +113,17 @@ const PatientDietForm: React.FC = () => {
                         <TableRow>
                             <TableCell>Daily Consumption</TableCell>
                             <TableCell>
-                                {["Milk Products", "Bread and Cereals", "Fruits", "Vegetables", "Meat", "Fat"].map((group, idx) => (
-                                    <FormControlLabel
+                                {["Milk Products", "Bread and Cereals", "Fruits", "Vegetables", "Meat", "Fat"].map((option, idx) => (
+                                    <Button
+                                        size="small"
                                         key={idx}
-                                        control={<Checkbox />}
-                                        label={group}
+                                        variant={selected.includes(option) ? "contained" : "outlined"}
+                                        color={selected.includes(option) ? "success" : "inherit"}
+                                        onClick={() => handleToggle(option)}
                                         sx={{ mr: 2 }}
-                                    />
+                                    >
+                                        {option}
+                                    </Button>
                                 ))}
                             </TableCell>
                         </TableRow>
@@ -210,12 +231,16 @@ const PatientDietForm: React.FC = () => {
                                 <TableCell>{row.label}</TableCell>
                                 <TableCell>
                                     {row.options.map((option, idx) => (
-                                        <FormControlLabel
+                                        <Button
+                                            size="small"
                                             key={idx}
-                                            control={<Checkbox />}
-                                            label={option}
+                                            variant={selected.includes(option) ? "contained" : "outlined"}
+                                            color={selected.includes(option) ? "warning" : "inherit"}
+                                            onClick={() => handleToggle(option)}
                                             sx={{ mr: 2 }}
-                                        />
+                                        >
+                                            {option}
+                                        </Button>
                                     ))}
                                 </TableCell>
                             </TableRow>

@@ -1,4 +1,5 @@
-export const dietTemplates = {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const dietTemplates:any = {
   "Balanced Diet": {
     Monday: {
       Breakfast: "Oatmeal with fruits",

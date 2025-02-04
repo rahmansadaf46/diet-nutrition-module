@@ -35,7 +35,7 @@ const DietChart = () => {
 
     const handleTemplateSelect = (template: any) => {
         setSelectedTemplate(template);
-        const dietData:any = dietTemplates[template as keyof typeof dietTemplates] || {};//+
+        const dietData: any = dietTemplates[template as keyof typeof dietTemplates] || {};//+
         const newEvents: Array<{//+
             id: string;//+
             title: string;//+
@@ -96,8 +96,27 @@ const DietChart = () => {
 
     return (
         <>
+            <TextField
+                label="Start Date"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                sx={{ mb: 2, mr: 2 }}
+                size="small"
+            />
+            <TextField
+                label="End Date"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                sx={{ mb: 2 }}
+                size="small"
+            />
+            <br />
             <small>Select Diet Template</small>
-            <FormControl size="small" fullWidth sx={{ mb: 3 }}>
+            <FormControl disabled={!startDate && !endDate} size="small" fullWidth sx={{ mb: 3 }}>
                 <Select
                     value={selectedTemplate}
                     onChange={(e) => handleTemplateSelect(e.target.value)}
@@ -109,23 +128,6 @@ const DietChart = () => {
                     ))}
                 </Select>
             </FormControl>
-
-            <TextField
-                label="Start Date"
-                type="date"
-                InputLabelProps={{ shrink: true }}
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                sx={{ mb: 2, mr: 2 }}
-            />
-            <TextField
-                label="End Date"
-                type="date"
-                InputLabelProps={{ shrink: true }}
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                sx={{ mb: 2 }}
-            />
 
             <Calendar
                 localizer={localizer}

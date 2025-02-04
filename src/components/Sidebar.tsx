@@ -19,7 +19,6 @@ const Sidebar: React.FC = () => {
             <List>
                 {menuItems.map((item) => (
                     <ListItem
-                        button
                         key={item.name}
                         onClick={() => navigate(item.route)}
                         sx={{

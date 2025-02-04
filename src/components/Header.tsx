@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         <AppBar sx={{ background: '#143E44' }} position="fixed">
             <Toolbar>
                 <Avatar src={logo} alt="Logo" sx={{ marginRight: 2, width: '55px', height: '55px' }} />
-                <Typography variant="h6" color="#fff"><b>Diet & Nutrition Module</b></Typography>
+                <Typography variant="h6" color="#fff"><b>NutriHealth</b></Typography>
                 <IconButton
                     edge="end"
                     color="inherit"

@@ -53,6 +53,141 @@ const PatientDietForm: React.FC = () => {
                     </Grid>
                 </Grid>
             </Box>
+            {/* GI Function */}
+            <Box sx={{ mb: 3 }}>
+                <Typography variant="h6">GI Function</Typography>
+                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Appetite</TableCell>
+                            <TableCell>
+                                {["Normal", "Suppressed", "Increased"].map((option, idx) => (
+                                    <FormControlLabel
+                                        key={idx}
+                                        control={<Checkbox />}
+                                        label={option}
+                                        sx={{ mr: 2 }}
+                                    />
+                                ))}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Symptoms</TableCell>
+                            <TableCell>
+                                {["Anorexia", "Nausea", "Diarrhea", "Constipation"].map((option, idx) => (
+                                    <FormControlLabel
+                                        key={idx}
+                                        control={<Checkbox />}
+                                        label={option}
+                                        sx={{ mr: 2 }}
+                                    />
+                                ))}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Box>
+
+            {/* Diet History */}
+            <Box sx={{ mb: 3 }}>
+                <Typography variant="h6">Diet History</Typography>
+                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Daily Consumption</TableCell>
+                            <TableCell>
+                                {["Milk Products", "Bread and Cereals", "Fruits", "Vegetables", "Meat", "Fat"].map((group, idx) => (
+                                    <FormControlLabel
+                                        key={idx}
+                                        control={<Checkbox />}
+                                        label={group}
+                                        sx={{ mr: 2 }}
+                                    />
+                                ))}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Junk Food Frequency</TableCell>
+                            <TableCell>
+                                <TextField size="small" label="Times per week" type="number" />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Meal Timing</TableCell>
+                            <TableCell>
+                                {['Breakfast', 'Lunch', 'Dinner'].map((meal, idx) => (
+                                    <Box key={idx} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                        <Typography sx={{ minWidth: 100 }}>{meal}:</Typography>
+                                        <TextField size="small" label="Time" />
+                                    </Box>
+                                ))}
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Skipped Meals</TableCell>
+                            <TableCell>
+                                {['Breakfast', 'Lunch', 'Dinner'].map((meal, idx) => (
+                                    <FormControlLabel
+                                        key={idx}
+                                        control={<Checkbox />}
+                                        label={meal}
+                                        sx={{ mr: 2 }}
+                                    />
+                                ))}
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Box>
+
+            {/* Water Intake */}
+            <Box sx={{ mb: 3 }}>
+                <Typography variant="h6">Water Intake</Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <TextField size="small" fullWidth label="Glasses per day" type="number" />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        {['Cold', 'Room Temperature', 'Warm'].map((temp, idx) => (
+                            <FormControlLabel
+                                key={idx}
+                                control={<Checkbox />}
+                                label={temp}
+                                sx={{ mr: 2 }}
+                            />
+                        ))}
+                    </Grid>
+                </Grid>
+            </Box>
+
+            {/* Sleep-Wake Cycle */}
+            <Box sx={{ mb: 3 }}>
+                <Typography variant="h6">Sleep-Wake Cycle</Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField size="small" fullWidth label="Sleep Time" type="time" InputLabelProps={{ shrink: true }} />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField size="small" fullWidth label="Wake-up Time" type="time" InputLabelProps={{ shrink: true }} />
+                    </Grid>
+                </Grid>
+            </Box>
+
+            {/* Exercise and Walk */}
+            <Box sx={{ mb: 3 }}>
+                <Typography variant="h6">Exercise and Walk</Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField size="small" fullWidth label="Duration" type="text" />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField size="small" fullWidth label="Days per week" type="number" />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField size="small" fullWidth label="Type of Exercise" type="text" />
+                    </Grid>
+                </Grid>
+            </Box>
 
             {/* Physical Examination */}
             <Box sx={{ mb: 3 }}>

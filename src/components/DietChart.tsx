@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { dietTemplates } from "../data/dietTemplates";
 
@@ -23,9 +23,15 @@ const meals = [
     { name: "Evening Snack", time: "15:00 PM" },
     { name: "Dinner", time: "20:00 PM" },
 ];
-
+interface Event {
+    id: string;
+    title: string;
+    start: Date;
+    end: Date;
+}
+const CalendarComponent = BigCalendar as React.ComponentType<any>;
 const DietChart = () => {
-    const [events, setEvents] = useState<any>([]);
+    const [events, setEvents] = useState<Event[]>([]);
     const [selectedTemplate, setSelectedTemplate] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
@@ -129,7 +135,7 @@ const DietChart = () => {
                 </Select>
             </FormControl>
 
-            <Calendar
+            <CalendarComponent
                 localizer={localizer}
                 events={events}
                 startAccessor="start"

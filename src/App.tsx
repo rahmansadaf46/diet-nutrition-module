@@ -43,6 +43,7 @@ const App: React.FC = () => {
             <Route path="/nutritional-assessment" element={<NutritionalAssessmentForm />} />
 
           </Routes>
+          {/* <footer style={{textAlign:'center', marginTop:'120px'}}><small>Technical Assistance by: <b>Crystal Technology Bangladesh Ltd.</b></small></footer> */}
         </Box>
       </Box>
     </Router>

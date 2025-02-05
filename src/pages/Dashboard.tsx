@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
         <Container>
             <Box sx={{ mt: -2, background: '#E0F7FA', width: '100%', height: '50px', textAlign: 'center', padding: '10px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#B2EBF2' } }}>
                 <Typography color="primary" sx={{ fontWeight: 'bold' }} variant="h5" gutterBottom>
-                    <img style={{ width: '20px' }} src={logo1} /> Welcome to the <span style={{ fontWeight: 'bold', color: '#143E44' }}>NutriHealth</span> Dashboard <img style={{ width: '20px' }} src={logo} />
+                    <img style={{ width: '20px' }} src={logo1} /> Welcome to the <span style={{ fontWeight: 'bold', color: '#143E44' }}>Nutri-Health <span style={{color: '#DC014E'}}>Track</span></span> Dashboard <img style={{ width: '20px' }} src={logo} />
                 </Typography>
                 {/* <Typography variant="body1">Manage your patients and their diet plans.</Typography> */}
             </Box>

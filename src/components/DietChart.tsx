@@ -19,9 +19,9 @@ const localizer = momentLocalizer(moment);
 const meals = [
     { name: "Breakfast", time: "08:00 AM" },
     { name: "Mid-Morning Snack", time: "10:00 AM" },
-    { name: "Lunch", time: "01:00 PM" },
-    { name: "Evening Snack", time: "05:00 PM" },
-    { name: "Dinner", time: "08:00 PM" },
+    { name: "Lunch", time: "13:00 PM" },
+    { name: "Evening Snack", time: "15:00 PM" },
+    { name: "Dinner", time: "20:00 PM" },
 ];
 
 const DietChart = () => {
@@ -29,7 +29,6 @@ const DietChart = () => {
     const [selectedTemplate, setSelectedTemplate] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
-    const [modalLabel, setModalLabel] = useState("");
     const [updatedLabel, setUpdatedLabel] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -58,41 +57,25 @@ const DietChart = () => {
 
             meals.forEach((meal: any) => {
                 if (dietData[dayName]?.[meal.name]) {
-                    // Extract the time parts from meal.time (e.g., "08:00 AM")
-                    const [timePart, meridiem] = meal.time.split(" ");
-                    const [hourStr, minuteStr] = timePart.split(":");
-                    let hour = parseInt(hourStr, 10);
-                    const minute = parseInt(minuteStr, 10);
-            
-                    // Convert to 24-hour format if needed
-                    if (meridiem === "PM" && hour !== 12) {
-                        hour += 12;
-                    } else if (meridiem === "AM" && hour === 12) {
-                        hour = 0;
-                    }
-            
-                    // Set the start time using the parsed hour and minute.
-                    const startTime = moment(formattedDate).set({ hour, minute });
-            
-                    // Create the event with a 1-hour duration.
                     newEvents.push({
                         id: `${formattedDate}-${meal.name}`,
-                        title: `${meal.name}: ${dietData[dayName][meal.name]}`,
-                        start: startTime.toDate(),
-                        end: moment(startTime).add(1, "hour").toDate(),
+                        title: dietData[dayName][meal.name],
+                        start: moment(formattedDate).set({
+                            hour: parseInt(meal.time.split(":"), 10),
+                            minute: parseInt(meal.time.split(":"), 10),
+                        }).toDate(),
+                        end: moment(formattedDate).add(1, "hour").toDate(),
                     });
                 }
             });
-            
         }
-        console.log(newEvents);
+
         setEvents(newEvents);
     };
 
     const handleEventClick = (event: any) => {
         setSelectedEvent(event);
-        setModalLabel(event.title.split(":")[0]);
-        setUpdatedLabel(event.title.split(":")[1]);
+        setUpdatedLabel(event.title);
         setModalOpen(true);
     };
 
@@ -104,7 +87,7 @@ const DietChart = () => {
     const handleUpdateEvent = () => {
         if (selectedEvent) {
             const updatedEvents = events.map((event: any) =>
-                event.id === selectedEvent.id ? { ...event, title: `${modalLabel}:${updatedLabel}` } : event
+                event.id === selectedEvent.id ? { ...event, title: updatedLabel } : event
             );
             setEvents(updatedEvents);
             handleModalClose();
@@ -169,7 +152,7 @@ const DietChart = () => {
                         p: 4,
                     }}
                 >
-                    <h3>Edit {modalLabel} Meal Plan</h3>
+                    <h3>Edit Meal Plan</h3>
                     <TextField
                         fullWidth
                         label="Meal"

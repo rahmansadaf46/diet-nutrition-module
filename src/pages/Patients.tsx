@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
 import {
-    Container, Typography, List, ListItem, ListItemText,
-    TextField, Button
+    Container,
+    List, ListItem, ListItemText,
+    TextField,
+    Typography
 } from "@mui/material";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { patients } from "../data/patients";
 
 const Patients: React.FC = () => {
@@ -12,10 +15,6 @@ const Patients: React.FC = () => {
     const filteredPatients = patients.filter(patient =>
         patient.name.toLowerCase().includes(search.toLowerCase())
     );
-
-    const handleViewDetails = (patient: any) => {
-        alert(`Name: ${patient.name}\nAge: ${patient.age}\nCondition: ${patient.condition}`);
-    };
 
     return (
         <Container>
@@ -34,9 +33,9 @@ const Patients: React.FC = () => {
             <List>
                 {filteredPatients.map((patient) => (
                     <ListItem sx={{border:'1px solid lightGray', margin:'10px 0px', borderRadius:'6px'}} key={patient.id} secondaryAction={
-                        <Button variant="contained" color="primary" onClick={() => handleViewDetails(patient)}>
+                        <Link to="/patient-profile" >
                             View Info
-                        </Button>
+                        </Link>
                     }>
                         <ListItemText
                             primary={patient.name}

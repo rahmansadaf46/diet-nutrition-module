@@ -1,7 +1,7 @@
 import { EventAvailable, Face, Man, Man4, People, Woman } from "@mui/icons-material";
 import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
 import React from "react";
-import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import logo1 from '../assets/heart.png';
 import logo from '../assets/love.png';
 
@@ -42,10 +42,39 @@ const genderData = [
     { gender: "Other", value: 30 }
 ];
 
+const bmiData = [
+    { category: "Underweight", count: 15 },
+    { category: "Normal", count: 50 },
+    { category: "Overweight", count: 20 },
+    { category: "Obese", count: 10 },
+];
+
+const visitFrequencyData = [
+    { month: "Jan", visits: 150 },
+    { month: "Feb", visits: 180 },
+    { month: "Mar", visits: 200 },
+    { month: "Apr", visits: 220 },
+    { month: "May", visits: 250 },
+    { month: "Jun", visits: 270 },
+    { month: "Jul", visits: 300 }
+];
+
+const recoveryData = [
+    { status: "Recovering", male: 60, female: 70, other: 10 },
+    { status: "Stable", male: 120, female: 110, other: 10 },
+    { status: "Critical", male: 30, female: 40, other: 10 }
+];
+
+const chronicDiseaseData = [
+    { disease: "Hypertension", male: 50, female: 60, other: 10 },
+    { disease: "Diabetes", male: 40, female: 35, other: 10 },
+    { disease: "Asthma", male: 30, female: 40, other: 10 }
+];
+
 const Dashboard: React.FC = () => {
     return (
         <Container>
-            <Box sx={{mt:-2, background: '#E0F7FA', width: '100%', height: '50px', textAlign: 'center', padding: '10px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#B2EBF2' } }}>
+            <Box sx={{ mt: -2, background: '#E0F7FA', width: '100%', height: '50px', textAlign: 'center', padding: '10px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#B2EBF2' } }}>
                 <Typography color="primary" sx={{ fontWeight: 'bold' }} variant="h5" gutterBottom>
                     <img style={{ width: '20px' }} src={logo1} /> Welcome to the <span style={{ fontWeight: 'bold', color: '#143E44' }}>NutriHealth</span> Dashboard <img style={{ width: '20px' }} src={logo} />
                 </Typography>
@@ -74,21 +103,21 @@ const Dashboard: React.FC = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                     <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-                        <Typography sx={{fontSize:'14px', fontWeight:'bold'}} color="primary" variant="h6">Patient Count by Month</Typography>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="primary" variant="h6">Patient Count by Month</Typography>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={monthlyPatientData}>
                                 <XAxis dataKey="month" />
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <Bar dataKey="Patient" fill="#037080" />
+                                <Bar dataKey="Patient" fill="#574964" />
                             </BarChart>
                         </ResponsiveContainer>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={6}>
                     <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-                        <Typography variant="h6" sx={{fontSize:'14px', fontWeight:'bold'}} color="warning" >Gender wise Patient</Typography>
+                        <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 'bold' }} color="warning" >Gender wise Patient</Typography>
                         <ResponsiveContainer width="100%" height={300}>
                             <PieChart>
                                 <Pie
@@ -111,6 +140,78 @@ const Dashboard: React.FC = () => {
                         </ResponsiveContainer>
                     </Box>
                 </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                    <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="primary" variant="h6">Monthly Growth of Patients</Typography>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie data={bmiData} dataKey="count" nameKey="category" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label>
+                                        <Cell key="underweight" fill="#3B6790" />
+                                        <Cell key="normal" fill="#EFB036" />
+                                        <Cell key="overweight" fill="#23486A" />
+                                        <Cell key="obese" fill="#4C7B8B" />
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+
+                        </ResponsiveContainer>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                    <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="primary" variant="h6">Patient Visit Frequency</Typography>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={visitFrequencyData}>
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="visits" stroke="#42A5F5" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="primary" variant="h6">Patient Recovery Status</Typography>
+                        <ResponsiveContainer width="100%" height={400}>
+                            <BarChart data={recoveryData}>
+                                <XAxis dataKey="status" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="male" stackId="a" fill="#B2A5FF" />
+                                <Bar dataKey="female" stackId="a" fill="#E195AB" />
+                                <Bar dataKey="other" stackId="a" fill="#6E8E59" />
+
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                    <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="primary" variant="h6">Chronic Disease Prevalence</Typography>
+                        <ResponsiveContainer width="100%" height={400}>
+                            <BarChart data={chronicDiseaseData}>
+                                <XAxis dataKey="disease" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="male" stackId="a" fill="#FBA518" />
+                                <Bar dataKey="female" stackId="a" fill="#A89C29" />
+                                <Bar dataKey="other" stackId="a" fill="#F9CB43" />
+
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Box>
+                </Grid>
+
+
             </Grid>
         </Container>
     );

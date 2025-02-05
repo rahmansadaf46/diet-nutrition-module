@@ -9,6 +9,7 @@ import DietCharts from "./pages/DietCharts";
 import TemplateCreator from "./pages/TemplateCreator";
 import NutritionalAssessmentForm from "./pages/NutritionalAssessmentForm";
 import logo from './assets/logo-removebg.png'
+import PatientProfile from "./pages/PatientProfile";
 const App: React.FC = () => {
   return (
     <Router>
@@ -38,6 +39,8 @@ const App: React.FC = () => {
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/patients" element={<Patients />} />
+            <Route path="/patient-profile" element={<PatientProfile />} />
+
             <Route path="/diet-charts" element={<DietCharts />} />
             <Route path="/template-creator" element={<TemplateCreator />} />
             <Route path="/nutritional-assessment" element={<NutritionalAssessmentForm />} />

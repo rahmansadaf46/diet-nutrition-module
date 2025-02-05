@@ -1,15 +1,15 @@
-import { EventAvailable, People, Person, PersonAdd } from "@mui/icons-material";
+import { EventAvailable, Face, Man, Man4, People, Woman } from "@mui/icons-material";
 import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const patientData = [
-    { name: "Total Patients", count: 150, icon: <People fontSize="large" color="primary" />, color: "#E3F2FD" },
-    { name: "My Patients", count: 50, icon: <Person fontSize="large" color="secondary" />, color: "#FCE4EC" },
-    { name: "Male", count: 80, icon: <Person fontSize="large" color="primary" />, color: "#E8F5E9" },
-    { name: "Female", count: 60, icon: <Person fontSize="large" color="secondary" />, color: "#FFF8E1" },
-    { name: "Other", count: 10, icon: <PersonAdd fontSize="large" color="action" />, color: "#F3E5F5" },
-    { name: "Today's Patients", count: 20, icon: <EventAvailable fontSize="large" color="success" />, color: "#E0F2F1" }
+    { name: "Total Patients", count: 150, icon: <People fontSize="large" color="primary" />, color: "#E3F2FD", textColor: "primary" },
+    { name: "My Patients", count: 50, icon: <Face fontSize="large" color="secondary" />, color: "#FCE4EC", textColor: "secondary" },
+    { name: "Today's Patients", count: 20, icon: <EventAvailable fontSize="large" color="success" />, color: "#E0F2F1", textColor: "success" },
+    { name: "Male", count: 80, icon: <Man fontSize="large" color="primary" />, color: "#E8F5E9", textColor: "primary" },
+    { name: "Female", count: 60, icon: <Woman fontSize="large" color="secondary" />, color: "#FFF8E1", textColor: "secondary" },
+    { name: "Other", count: 10, icon: <Man4 fontSize="large" color="action" />, color: "#F3E5F5", textColor: "action" }
 ];
 
 const monthlyPatientData = [
@@ -37,7 +37,7 @@ const monthlyPatientData = [
 const Dashboard: React.FC = () => {
     return (
         <Container>
-            <Box sx={{ background: '#E0F7FA', width: '100%', padding: '20px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#B2EBF2' }}}>
+            <Box sx={{ background: '#E0F7FA', width: '100%', padding: '20px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#B2EBF2' } }}>
                 <Typography variant="h5" gutterBottom>
                     Welcome to the <span style={{ fontWeight: 'bold', color: '#143E44' }}>NutriHealth</span> Dashboard
                 </Typography>
@@ -46,12 +46,18 @@ const Dashboard: React.FC = () => {
 
             <Grid container spacing={2} sx={{ marginTop: 2 }}>
                 {patientData.map((item, index) => (
-                    <Grid item xs={12} sm={6} md={4} lg={2} key={index}>
-                        <Card sx={{ textAlign: 'center', padding: '10px', background: item.color, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '120px' }}>
-                            <CardContent sx={{pt:3}}>
-                                {item.icon}
-                                <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 'bold', marginTop: '5px' }}>{item.name}</Typography>
-                                <Typography variant="h5" color="textPrimary">{item.count}</Typography>
+                    <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
+                        <Card sx={{ background: item.color, height:'70px' }}>
+                            <CardContent sx={{mt:-1}}>
+                                <Box sx={{display:'flex', justifyContent:'start'}}>
+                                    <Box sx={{display:'flex', justifyContent:'start', mt:1}}>
+                                        {item.icon}
+                                    </Box>
+                                    <Box sx={{textAlign:'right', width:'100%'}}>
+                                        <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 'bold' }}>{item.name}</Typography>
+                                        <Typography variant="h5" color={item.textColor}><b>{item.count}</b></Typography>
+                                    </Box>
+                                </Box>
                             </CardContent>
                         </Card>
                     </Grid>

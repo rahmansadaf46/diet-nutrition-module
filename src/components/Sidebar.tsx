@@ -16,7 +16,7 @@ const Sidebar: React.FC = () => {
 
     return (
         <Drawer variant="permanent" sx={{ width: 250, flexShrink: 0, }}>
-            <List>
+            <List sx={{mt:-1}}>
                 {menuItems.map((item) => (
                     <ListItem
                         key={item.name}

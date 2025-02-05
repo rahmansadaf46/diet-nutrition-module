@@ -185,9 +185,9 @@ const Dashboard: React.FC = () => {
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <Bar dataKey="male" stackId="a" fill="#B2A5FF" />
-                                <Bar dataKey="female" stackId="a" fill="#E195AB" />
-                                <Bar dataKey="other" stackId="a" fill="#6E8E59" />
+                                <Bar dataKey="male" stackId="a" fill="#A19AD3" />
+                                <Bar dataKey="female" stackId="a" fill="#A1D6CB" />
+                                <Bar dataKey="other" stackId="a" fill="#FAC67A" />
 
                             </BarChart>
                         </ResponsiveContainer>

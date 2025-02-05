@@ -121,7 +121,7 @@ const PatientProfile = () => {
                     <ResponsiveContainer width="100%" height={300}>
                         <PieChart>
                             <Pie data={patientData.macronutrients} dataKey="value" nameKey="nutrient" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label>
-                                {patientData.macronutrients.map((entry, index) => (
+                                {patientData.macronutrients.map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>

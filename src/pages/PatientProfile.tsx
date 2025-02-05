@@ -50,7 +50,7 @@ const PatientProfile = () => {
             <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                 <Button onClick={() => navigate("/diet-charts")}
                     sx={{ mr: 1, fontWeight: 'bold' }} variant="contained" color="warning">Diet Planning</Button>
-                <Button onClick={() => navigate("/nutritional-assessment")} sx={{ fontWeight: 'bold' }} variant="contained" color="success">Nutritional Assesment</Button>
+                <Button onClick={() => navigate("/nutritional-assessment")} sx={{ fontWeight: 'bold' }} variant="contained" color="success">Nutritional Assessment</Button>
 
             </Box>
             <Grid container spacing={3} p={3}>
@@ -60,29 +60,44 @@ const PatientProfile = () => {
                     <TableContainer component={Paper}>
                         <Table>
                             <TableBody>
-                                <TableRow><TableCell>Name</TableCell><TableCell>{patientData.name}</TableCell></TableRow>
-                                <TableRow><TableCell>Age</TableCell><TableCell>{patientData.age}</TableCell></TableRow>
-                                <TableRow><TableCell>BMI</TableCell><TableCell>{patientData.bmi}</TableCell></TableRow>
-                                <TableRow><TableCell>Daily Caloric Intake</TableCell><TableCell>{patientData.calories.actual} kcal</TableCell></TableRow>
-                                <TableRow><TableCell>Recommended Intake</TableCell><TableCell>{patientData.calories.recommended} kcal</TableCell></TableRow>
+                                {patientData && [
+                                    { label: "Name", value: patientData.name },
+                                    { label: "Age", value: patientData.age },
+                                    { label: "BMI", value: patientData.bmi },
+                                    { label: "Daily Caloric Intake", value: `${patientData.calories.actual} kcal` },
+                                    { label: "Recommended Intake", value: `${patientData.calories.recommended} kcal` }
+                                ].map((row, index) => (
+                                    <TableRow key={index} sx={{ backgroundColor: index % 2 !== 0 ? '#F3F3E0' : '#FBF8EF' }}>
+                                        <TableCell>{row.label}</TableCell>
+                                        <TableCell>{row.value}</TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </Grid>
                 <Grid item xs={12} md={6}>
 
                     <TableContainer component={Paper}>
                         <Table>
                             <TableBody>
-                                <TableRow><TableCell>Height</TableCell><TableCell>65</TableCell></TableRow>
-                                <TableRow><TableCell>Weight</TableCell><TableCell>55</TableCell></TableRow>
-                                <TableRow><TableCell>Diagnosis</TableCell><TableCell>N/A</TableCell></TableRow>
-                                <TableRow><TableCell>IBW</TableCell><TableCell>{patientData.calories.recommended} kcal</TableCell></TableRow>
-
-                                <TableRow><TableCell>Status</TableCell><TableCell>Active</TableCell></TableRow>
+                                {[
+                                    { label: "Height", value: 65 },
+                                    { label: "Weight", value: 55 },
+                                    { label: "Diagnosis", value: "N/A" },
+                                    { label: "IBW", value: `${patientData.calories.recommended} kcal` },
+                                    { label: "Status", value: "Active" }
+                                ].map((row, index) => (
+                                    <TableRow key={index} sx={{ backgroundColor: index % 2 === 0 ? '#F3F3E0' : '#FBF8EF' }}>
+                                        <TableCell>{row.label}</TableCell>
+                                        <TableCell>{row.value}</TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </Grid>
 
                 {/* Caloric Intake Line Chart */}

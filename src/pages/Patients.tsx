@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+    Button,
     Container,
     List, ListItem, ListItemText,
     TextField,
@@ -32,10 +33,12 @@ const Patients: React.FC = () => {
 
             <List>
                 {filteredPatients.map((patient) => (
-                    <ListItem sx={{border:'1px solid lightGray', margin:'10px 0px', borderRadius:'6px'}} key={patient.id} secondaryAction={
+                    <ListItem sx={{ border: '1px solid lightGray', margin: '10px 0px', borderRadius: '6px' }} key={patient.id} secondaryAction={
                         <Link to="/patient-profile" >
-                            View Info
+                            <Button sx={{ fontWeight: 'bold' }} variant="contained" color="info"> View Info
+                            </Button>
                         </Link>
+
                     }>
                         <ListItemText
                             primary={patient.name}

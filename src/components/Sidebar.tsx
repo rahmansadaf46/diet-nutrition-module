@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Collapse, Typography } from "@mui/material";
-import { Dashboard, People, Settings, ExpandLess, ExpandMore, Article } from "@mui/icons-material";
+import { Dashboard, 
+    // People, Settings, 
+    ExpandLess, ExpandMore, 
+    // Article 
+} from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
@@ -9,21 +14,21 @@ const Sidebar: React.FC = () => {
     const [openSettings, setOpenSettings] = useState(false);
 
     const menuItems = [
-        { name: "Dashboard", route: "/dashboard", icon: <Dashboard /> },
-        { name: "Patients", route: "/patients", icon: <People /> },
-        {
-            name: "Settings",
-            icon: <Settings />,
-            subMenu: [
-                { name: "Templates", route: "/template-creator", icon: <Article /> }
-            ]
-        }
+        { name: "Homepage", route: "/dashboard", icon: <Dashboard /> },
+        // { name: "Patients", route: "/patients", icon: <People /> },
+        // {
+        //     name: "Settings",
+        //     icon: <Settings />,
+        //     subMenu: [
+        //         { name: "Templates", route: "/template-creator", icon: <Article /> }
+        //     ]
+        // }
     ];
 
     return (
         <Drawer variant="permanent" sx={{ width: 210, flexShrink: 0 }}>
             <List sx={{ width: 220, mt: -1 }}>
-                {menuItems.map((item) => (
+                {menuItems.map((item:any) => (
                     <React.Fragment key={item.name}>
                         <ListItem
                             onClick={() => {
@@ -37,7 +42,7 @@ const Sidebar: React.FC = () => {
                                 cursor: "pointer",
                                 backgroundColor: location.pathname === item.route ? "#e0f7fa" : "transparent",
                                 '&:hover': {
-                                    backgroundColor: location.pathname === item.route ? "#b2ebf2" : "#f1f1f1",
+                                    backgroundColor: location.pathname === item.route ? "#E3FCBB" : "#f1f1f1",
                                 }
                             }}
                         >
@@ -64,7 +69,7 @@ const Sidebar: React.FC = () => {
                         {item.subMenu && (
                             <Collapse in={openSettings} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    {item.subMenu.map((subItem) => (
+                                    {item.subMenu.map((subItem:any) => (
                                         <ListItem
                                             key={subItem.name}
                                             onClick={() => navigate(subItem.route)}

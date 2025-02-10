@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from '../assets/logo.png';
+import logo from '../assets/SKH LOGO.png';
 
 const Header: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -16,10 +16,10 @@ const Header: React.FC = () => {
     };
 
     return (
-        <AppBar sx={{ background: '#143E44' }} position="fixed">
+        <AppBar sx={{ background: '#009990' }} position="fixed">
             <Toolbar>
-                <Avatar src={logo} alt="Logo" sx={{ marginRight: 2, width: '55px', height: '55px' }} />
-                <Typography variant="h6" color="#F3F3E0"><b>Nutri-Health <span style={{color:'#FFB7BF'}}>Track</span></b></Typography>
+                <Avatar src={logo} alt="Logo" sx={{ marginRight: 2, width: '45px', height: '45px', background:'#fff' }} />
+                <Typography variant="h6" color="#E1FFBB"><b>SKH <span style={{color:'#F0BB78'}}></span> <span style={{color:'rgb(255, 142, 182)'}}>Dashboard</span></b></Typography>
                 <IconButton
                     edge="end"
                     color="inherit"

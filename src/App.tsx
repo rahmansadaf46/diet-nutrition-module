@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Dashboard from "./pages/Dashboard";
+import Homepage from "./pages/Homepage";
 import Patients from "./pages/Patients";
 import DietCharts from "./pages/DietCharts";
 import TemplateCreator from "./pages/TemplateCreator";
 import NutritionalAssessmentForm from "./pages/NutritionalAssessmentForm";
-import logo from './assets/logo-removebg.png'
+import logo from './assets/SKH LOGO.png'
 import PatientProfile from "./pages/PatientProfile";
 const App: React.FC = () => {
   return (
@@ -35,8 +35,8 @@ const App: React.FC = () => {
             pointerEvents: "none",
           }, }}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/dashboard" element={<Homepage />} />
 
             <Route path="/patients" element={<Patients />} />
             <Route path="/patient-profile" element={<PatientProfile />} />

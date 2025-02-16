@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AccountCircle, AdminPanelSettings, AssignmentInd, Diversity3, Face4, LocalHospital, LocalHotel, Man, Man4, MonitorHeart, People, PersonPin, Wc, Woman } from "@mui/icons-material";
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
-import React from "react";
-import { Bar, BarChart, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Box, Card, CardContent, Grid, MenuItem, Select, Typography } from "@mui/material";
+import { PieChart } from '@mui/x-charts/PieChart';
+import React, { useState } from "react";
+import { Bar, BarChart, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import logo from '../assets/dashboard1.png';
 import logo1 from '../assets/statisctics.png';
 
@@ -13,7 +15,7 @@ const patientData = [
     { name: "Total Emergency patient", count: 150, icon: <MonitorHeart fontSize="large" color="success" />, color: "#FFF8E1", textColor: "success" },
     { name: "Total IPD Patient", count: 50, icon: <LocalHotel fontSize="large" color="warning" />, color: "#E8F5E9", textColor: "warning" },
     { name: "Male", count: 80, icon: <Man fontSize="large" color="success" />, color: "#FFF8E1", textColor: "success" },
-    { name: "Female", count: 60, icon: <Woman fontSize="large" color="secondary" />, color: "#E3F2FD", textColor: "secondary" },
+    { name: "Female", count: 60, icon: <Woman fontSize="large" color="warning" />, color: "#E3F2FD", textColor: "warning" },
     { name: "Other", count: 10, icon: <Man4 fontSize="large" color="action" />, color: "#F3E5F5", textColor: "action" },
     { name: "Government patient ", count: 80, icon: <AdminPanelSettings fontSize="large" color="secondary" />, color: "#E3F2FD", textColor: "secondary" },
     { name: "Non-Government patient", count: 60, icon: <AccountCircle fontSize="large" color="primary" />, color: "#E8F5E9", textColor: "primary" },
@@ -45,16 +47,43 @@ const departmentWiseData = [
     { department: "Eye", "Government": 120, 'Non Government': 9 },
 
 ];
-const doctorWiseData = [
-    { name: "Dr. Mohammad Kamrul Hasan", value: 120 },
-    { name: "Dr. Sonia Sharmin", value: 95 },
-    { name: "Dr. Md. Saidul Anower", value: 110 },
-    { name: "Dr. Ajmayeena Tajrian", value: 130 },
-    { name: "Dr. Md. Sahidullah", value: 105 },
-    { name: "Dr.Md.zia uddin", value: 115 },
+
+const departmentData = [
+    {
+        department: "Hematology",
+        rooms: [
+            { room: "Room 1", Government: 40, "Non Government": 2 },
+            { room: "Room 2", Government: 50, "Non Government": 3 },
+            { room: "Room 3", Government: 30, "Non Government": 1 },
+        ],
+    },
+    {
+        department: "Medicine",
+        rooms: [
+            { room: "Room 1", Government: 60, "Non Government": 2 },
+            { room: "Room 2", Government: 70, "Non Government": 3 },
+            { room: "Room 3", Government: 20, "Non Government": 0 },
+        ],
+    },
+    {
+        department: "ENT",
+        rooms: [
+            { room: "Room 1", Government: 40, "Non Government": 5 },
+            { room: "Room 2", Government: 30, "Non Government": 3 },
+            { room: "Room 3", Government: 20, "Non Government": 2 },
+        ],
+    },
+    {
+        department: "Cardiology",
+        rooms: [
+            { room: "Room 1", Government: 50, "Non Government": 2 },
+            { room: "Room 2", Government: 50, "Non Government": 3 },
+            { room: "Room 3", Government: 30, "Non Government": 2 },
+        ],
+    },
 ];
 
-const COLORS = ["#754E1A", "#A89C29", "#E82561", "#039990", "#D72638", "#3D348B"];
+
 const consultedPatientData = [
     { department: "Hematology", "Government": 120, 'Non Government': 6 },
     { department: "Medicine", "Government": 150, 'Non Government': 5 },
@@ -83,7 +112,55 @@ const opdPatientData = [
     { day: "Saturday", patients: 160 },
     { day: "Sunday", patients: 140 },
 ];
+
+
+
+
+// Calculate percentage for each data item
+
+const registrationData = [
+    { label: "Service Received", value: 300, color: "#859F3D" }, // Green
+    { label: "Service Not Received", value: 120, color: "#D76C82" }, // Red
+];
+
+const pharmacyData = [
+    { label: "Complete", value: 500, color: "#15B392" }, // Green
+    { label: "Queue", value: 200, color: "#FF4545" }, // Red
+
+];
+
+const labData = [
+    { label: "Complete", value: 241, color: "#229799" }, // Green
+    { label: "Queue", value: 142, color: "#F87A53" }, // Red
+
+];
+
+const radiologyData = [
+    { label: "Complete", value: 142, color: "#6A9C89" }, // Green
+    { label: "Queue", value: 57, color: "#DE7C7D" }, // Red
+];
+
+// Function to calculate percentage and update the data array
+const calculatePercentageData = (data: any[]) => {
+    return data.map(item => ({
+        ...item,
+        count: ((item.value / (data.reduce((sum, item) => sum + item.value, 0))) * 100).toFixed(2), // Calculate percentage
+    }));
+};
+
+// Calculate percentage for each data item
+const regData = calculatePercentageData(registrationData)
+const pharmacyRegData = calculatePercentageData(pharmacyData);
+const labRegData = calculatePercentageData(labData);
+const radiologyRegData = calculatePercentageData(radiologyData);
+
 const Homepage: React.FC = () => {
+    const [selectedDepartment, setSelectedDepartment] = useState(departmentData[0].department);
+
+    // Get room-wise data based on the selected department
+    const roomData = departmentData.find((dept) => dept.department === selectedDepartment)?.rooms || [];
+
+
     return (
         <>
             <Box sx={{ mt: -2, background: '#E3FCBB', width: '100%', height: '50px', textAlign: 'center', padding: '10px', borderRadius: '5px', transition: 'background 0.5s ease-in-out', '&:hover': { background: '#bdf661' } }}>
@@ -179,18 +256,35 @@ const Homepage: React.FC = () => {
             <Grid container sx={{ justifyContent: 'center' }} spacing={2}>
 
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                    <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-                        <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }} color="warning" variant="h6">
-                            Department-wise Patient Count
+                    <Box sx={{ marginTop: 4, textAlign: "center" }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", }} color="warning" variant="h6">
+                            Department-wise Room Patient Count
                         </Typography>
+                        {/* Dropdown for Department Selection */}
+                        <Box sx={{textAlign:'right'}}>
+                            <Select
+                                value={selectedDepartment}
+                                onChange={(e) => setSelectedDepartment(e.target.value)}
+                                sx={{ marginBottom: 3, background: "white", minWidth: 100 }}
+                                size="small"
+                            >
+                                {departmentData.map((dept) => (
+                                    <MenuItem key={dept.department} value={dept.department}>
+                                        {dept.department}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+
+                        </Box>
+                        {/* Room-wise Bar Chart */}
                         <ResponsiveContainer width="100%" height={400}>
-                            <BarChart data={departmentWiseData}>
-                                <XAxis dataKey="department" />
+                            <BarChart data={roomData}>
+                                <XAxis dataKey="room" />
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
                                 <Bar barSize={50} dataKey="Government" stackId="a" fill="#FBA518" />
-                                <Bar dataKey='Non Government' stackId="a" fill="#A89C29" />
+                                <Bar dataKey="Non Government" stackId="a" fill="#A89C29" />
                             </BarChart>
                         </ResponsiveContainer>
                     </Box>
@@ -212,36 +306,152 @@ const Homepage: React.FC = () => {
                                 <Bar dataKey='Non Government' stackId="a" fill="#6E8E59" />
                             </BarChart>
                         </ResponsiveContainer>
+
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Box sx={{ marginTop: 4, textAlign: "center", border: '2px solid #8D0B41', borderRadius: '20px', pb: 2 }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", mt: 2 }} color="#8D0B41" variant="h6">
+                            Registration-wise Patient Distribution
+                        </Typography>
+                        <PieChart
+                            height={292}
+                            legend={{ hidden: true }}
+                            sx={{ ms: 1, fontWeight: 'bold', position: 'relative', left: '45px' }}
+                            series={[
+                                {
+                                    arcLabel: (item: any) => `${item.count}%`, // Show percentage
+                                    arcLabelMinAngle: 35, // Minimum angle for labels
+                                    arcLabelRadius: '60%', // Set the radius of the arc label
+                                    data: regData, // Use the data with percentage values
+                                },
+                            ]}
+
+                        />
+                        <Box sx={{ mt: 1, fontSize: "14px", fontWeight: 'bold', justifyContent: 'center' }}>
+                            {regData.map((item: any, index: number) => (
+                                <Box key={index} sx={{ display: "flex", justifyContent: "center", marginBottom: 1 }}>
+                                    <Box sx={{ width: "10px", height: "10px", backgroundColor: item.color, marginTop: 0.55, marginRight: 0.7, borderRadius: '50px', }}></Box>
+                                    <Typography sx={{ fontSize: "14px", color: item.color }}>
+                                        {item.label}: <b>{item.value}</b>
+                                    </Typography>
+                                </Box>
+                            ))}
+
+                        </Box>
+                        <Box sx={{ marginTop: 1, fontSize: "18px", color: "#8D0B41" }}>
+                            Total: <b>{regData.reduce((sum, item) => sum + item.value, 0)}</b>
+                        </Box>
+                    </Box>
+
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Box sx={{ marginTop: 4, textAlign: "center", border: '2px solid #3D5300', borderRadius: '20px', pb: 2 }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", mt: 1 }} color="#3D5300" variant="h6">
+                            Pharmacy-wise Queue and Complete
+                        </Typography>
+                        <PieChart
+                            height={300}
+                            legend={{ hidden: true }}
+                            sx={{ ms: 1, fontWeight: 'bold', position: 'relative', left: '45px' }}
+                            series={[
+                                {
+                                    arcLabel: (item: any) => `${item.count}%`, // Show percentage
+                                    arcLabelMinAngle: 35, // Minimum angle for labels
+                                    arcLabelRadius: '60%', // Set the radius of the arc label
+                                    data: pharmacyRegData, // Use the data with percentage values
+                                },
+                            ]}
+                        />
+                        <Box sx={{ mt: 1, fontSize: "14px", fontWeight: 'bold', justifyContent: 'center' }}>
+                            {pharmacyRegData.map((item: any, index: number) => (
+                                <Box key={index} sx={{ display: "flex", justifyContent: "center", marginBottom: 1 }}>
+                                    <Box sx={{ width: "10px", height: "10px", backgroundColor: item.color, marginTop: 0.55, marginRight: 0.7, borderRadius: '50px', }}></Box>
+                                    <Typography sx={{ fontSize: "14px", color: item.color }}>
+                                        {item.label}: <b>{item.value}</b>
+                                    </Typography>
+                                </Box>
+                            ))}
+
+                        </Box>
+                        <Box sx={{ marginTop: 1, fontSize: "18px", color: "#3D5300" }}>
+                            Total: <b>{pharmacyRegData.reduce((sum, item) => sum + item.value, 0)}</b>
+                        </Box>
+                    </Box>
+                </Grid>
+
+                {/* Lab Pie Chart */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Box sx={{ marginTop: 4, textAlign: "center", border: '2px solid #3B1E54', borderRadius: '20px', pb: 2 }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", mt: 1 }} color="#3B1E54" variant="h6">
+                            Lab-wise Queue and Complete
+                        </Typography>
+                        <PieChart
+                            height={300}
+                            legend={{ hidden: true }}
+                            sx={{ ms: 1, fontWeight: 'bold', position: 'relative', left: '45px' }}
+                            series={[
+                                {
+                                    arcLabel: (item: any) => `${item.count}%`, // Show percentage
+                                    arcLabelMinAngle: 35, // Minimum angle for labels
+                                    arcLabelRadius: '60%', // Set the radius of the arc label
+                                    data: labRegData, // Use the data with percentage values
+                                },
+                            ]}
+                        />
+                        <Box sx={{ mt: 1, fontSize: "14px", fontWeight: 'bold', justifyContent: 'center' }}>
+                            {labRegData.map((item: any, index: number) => (
+                                <Box key={index} sx={{ display: "flex", justifyContent: "center", marginBottom: 1 }}>
+                                    <Box sx={{ width: "10px", height: "10px", backgroundColor: item.color, marginTop: 0.55, marginRight: 0.7, borderRadius: '50px', }}></Box>
+                                    <Typography sx={{ fontSize: "14px", color: item.color }}>
+                                        {item.label}: <b>{item.value}</b>
+                                    </Typography>
+                                </Box>
+                            ))}
+
+                        </Box>
+                        <Box sx={{ marginTop: 1, fontSize: "18px", color: "#3B1E54" }}>
+                            Total: <b>{labRegData.reduce((sum, item) => sum + item.value, 0)}</b>
+                        </Box>
+                    </Box>
+                </Grid>
+
+                {/* Radiology Pie Chart */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <Box sx={{ marginTop: 4, textAlign: "center", border: '2px solid #536493', borderRadius: '20px', pb: 2 }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", mt: 1 }} color="#536493" variant="h6">
+                            Radiology-wise Queue and Complete
+                        </Typography>
+                        <PieChart
+                            height={300}
+                            legend={{ hidden: true }}
+                            sx={{ ms: 1, fontWeight: 'bold', position: 'relative', left: '45px' }}
+                            series={[
+                                {
+                                    arcLabel: (item: any) => `${item.count}%`, // Show percentage
+                                    arcLabelMinAngle: 35, // Minimum angle for labels
+                                    arcLabelRadius: '60%', // Set the radius of the arc label
+                                    data: radiologyRegData, // Use the data with percentage values
+                                },
+                            ]}
+                        />
+                        <Box sx={{ mt: 1, fontSize: "14px", fontWeight: 'bold', justifyContent: 'center' }}>
+                            {radiologyRegData.map((item: any, index: number) => (
+                                <Box key={index} sx={{ display: "flex", justifyContent: "center", marginBottom: 1 }}>
+                                    <Box sx={{ width: "10px", height: "10px", backgroundColor: item.color, marginTop: 0.55, marginRight: 0.7, borderRadius: '50px', }}></Box>
+                                    <Typography sx={{ fontSize: "14px", color: item.color }}>
+                                        {item.label}: <b>{item.value}</b>
+                                    </Typography>
+                                </Box>
+                            ))}
+
+                        </Box>
+                        <Box sx={{ marginTop: 1, fontSize: "18px", color: "#536493" }}>
+                            Total: <b>{radiologyRegData.reduce((sum, item) => sum + item.value, 0)}</b>
+                        </Box>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={12}>
-                    <Box sx={{ marginTop: 4, textAlign: "center" }}>
-                        <Typography sx={{ fontSize: "14px", fontWeight: "bold" }} color="primary" variant="h6">
-                            Doctor-wise Patient Distribution
-                        </Typography>
-                        <ResponsiveContainer width="100%" height={400}>
-                            <PieChart>
-                                <Pie
-                                    data={doctorWiseData}
-                                    cx="50%"
-                                    cy="50%"
-                                    // labelLine={false}
-                                    outerRadius={120}
-                                    fill="#8884d8"
-                                    dataKey="value"
-                                    label={({ name }) => `${name}`}
-                                >
-                                    {doctorWiseData.map((_, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} lg={4}>
                     <Box sx={{ marginTop: 4, textAlign: "center" }}>
                         <Typography sx={{ fontSize: "14px", fontWeight: "bold" }} color="error" variant="h6">
                             Department-wise Pending Patient

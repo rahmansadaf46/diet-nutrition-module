@@ -3,7 +3,7 @@ import { AccountCircle, AdminPanelSettings, AssignmentInd, Diversity3, Face4, Lo
 import { Box, Card, CardContent, Grid, MenuItem, Select, Typography } from "@mui/material";
 import { PieChart } from '@mui/x-charts/PieChart';
 import React, { useState } from "react";
-import { Bar, BarChart, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import logo from '../assets/dashboard1.png';
 import logo1 from '../assets/statisctics.png';
 
@@ -83,6 +83,41 @@ const departmentData = [
     },
 ];
 
+const departmentDataQueue = [
+    {
+        department: "Hematology",
+        rooms: [
+            { room: "Room 1", Completed: 40, Queue: 20 },
+            { room: "Room 2", Completed: 50, Queue: 30 },
+            { room: "Room 3", Completed: 30, Queue: 10 },
+        ],
+    },
+    {
+        department: "Medicine",
+        rooms: [
+            { room: "Room 1", Completed: 60, Queue: 20 },
+            { room: "Room 2", Completed: 70, Queue: 30 },
+            { room: "Room 3", Completed: 40, Queue: 20 },
+        ],
+    },
+    {
+        department: "ENT",
+        rooms: [
+            { room: "Room 1", Completed: 40, Queue: 50 },
+            { room: "Room 2", Completed: 30, Queue: 30 },
+            { room: "Room 3", Completed: 20, Queue: 20 },
+        ],
+    },
+    {
+        department: "Cardiology",
+        rooms: [
+            { room: "Room 1", Completed: 50, Queue: 20 },
+            { room: "Room 2", Completed: 50, Queue: 30 },
+            { room: "Room 3", Completed: 30, Queue: 20 },
+        ],
+    },
+];
+
 
 const consultedPatientData = [
     { department: "Hematology", "Government": 120, 'Non Government': 6 },
@@ -156,9 +191,12 @@ const radiologyRegData = calculatePercentageData(radiologyData);
 
 const Homepage: React.FC = () => {
     const [selectedDepartment, setSelectedDepartment] = useState(departmentData[0].department);
+    const [selectedDepartmentQueue, setSelectedDepartmentQueue] = useState(departmentDataQueue[0].department);
 
     // Get room-wise data based on the selected department
     const roomData = departmentData.find((dept) => dept.department === selectedDepartment)?.rooms || [];
+
+    const roomDataQueue = departmentDataQueue.find((dept) => dept.department === selectedDepartmentQueue)?.rooms || [];
 
 
     return (
@@ -169,6 +207,14 @@ const Homepage: React.FC = () => {
                 </Typography>
                 {/* <Typography variant="body1">Manage your patients and their diet plans.</Typography> */}
             </Box>
+            {/* <Grid item xs={12} sm={12} md={6} lg={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                        <DatePicker label="Basic date picker" />
+                    </DemoContainer>
+                </LocalizationProvider>
+            </Grid> */}
+
 
             <Grid container spacing={2} sx={{ marginTop: 1, justifyContent: 'center' }}>
                 {patientData.map((item, index) => (
@@ -261,7 +307,7 @@ const Homepage: React.FC = () => {
                             Department-wise Room Patient Count
                         </Typography>
                         {/* Dropdown for Department Selection */}
-                        <Box sx={{textAlign:'right'}}>
+                        <Box sx={{ textAlign: 'right' }}>
                             <Select
                                 value={selectedDepartment}
                                 onChange={(e) => setSelectedDepartment(e.target.value)}
@@ -451,21 +497,63 @@ const Homepage: React.FC = () => {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4} lg={12}>
+                <Grid item xs={12} sm={6} md={4} lg={6}>
                     <Box sx={{ marginTop: 4, textAlign: "center" }}>
-                        <Typography sx={{ fontSize: "14px", fontWeight: "bold" }} color="error" variant="h6">
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", paddingBottom: "50px" }} color="error" variant="h6">
                             Department-wise Pending Patient
                         </Typography>
                         <ResponsiveContainer width="100%" height={400}>
-                            <LineChart data={pendingPatientData}>
+                            <AreaChart data={pendingPatientData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="colorPending" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#D72638" stopOpacity={0.8} />
+                                        <stop offset="95%" stopColor="#D72638" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
                                 <XAxis dataKey="department" />
+                                <YAxis />
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <Tooltip />
+                                <Legend />
+                                <Area type="monotone" dataKey="pending" stroke="#D72638" fillOpacity={1} fill="url(#colorPending)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6}>
+                    <Box sx={{ marginTop: 4, textAlign: "center" }}>
+                        <Typography sx={{ fontSize: "14px", fontWeight: "bold", }} color="warning" variant="h6">
+                            Department-wise Room Patient Count
+                        </Typography>
+                        {/* Dropdown for Department Selection */}
+                        <Box sx={{ textAlign: 'right' }}>
+                            <Select
+                                value={selectedDepartmentQueue}
+                                onChange={(e) => setSelectedDepartmentQueue(e.target.value)}
+                                sx={{ marginBottom: 3, background: "white", minWidth: 100 }}
+                                size="small"
+                            >
+                                {departmentDataQueue.map((dept) => (
+                                    <MenuItem key={dept.department} value={dept.department}>
+                                        {dept.department}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+
+                        </Box>
+                        {/* Room-wise Bar Chart */}
+                        <ResponsiveContainer width="100%" height={400}>
+                            <BarChart data={roomDataQueue}>
+                                <XAxis dataKey="room" />
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <Line type="monotone" dataKey="pending" stroke="#D72638" strokeWidth={2} dot={{ r: 5 }} />
-                            </LineChart>
+                                <Bar barSize={50} dataKey="Queue" stackId="a" fill="#F72C5B" />
+                                <Bar dataKey="Completed" stackId="a" fill="#FBA518" />
+                            </BarChart>
                         </ResponsiveContainer>
                     </Box>
+
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                     <Box sx={{ marginTop: 4, textAlign: "center" }}>

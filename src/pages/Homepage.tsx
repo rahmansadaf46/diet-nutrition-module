@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AccountCircle, AdminPanelSettings, AssignmentInd, Diversity3, Face4, LocalHospital, LocalHotel, Man, Man4, MonitorHeart, People, PersonPin, Wc, Woman } from "@mui/icons-material";
+import { AccountCircle, AdminPanelSettings, AssignmentInd, Diversity3, Face4, LocalHospital, LocalHotel, Man, Man4, MonitorHeart, People, PersonAddAlt1, PersonPin, Visibility, Wc, Woman } from "@mui/icons-material";
 import { Box, Card, CardContent, Grid, MenuItem, Select, Typography } from "@mui/material";
 import { PieChart } from '@mui/x-charts/PieChart';
 import React, { useState } from "react";
@@ -19,6 +19,8 @@ const patientData = [
     { name: "Other", count: 10, icon: <Man4 fontSize="large" color="action" />, color: "#F3E5F5", textColor: "action" },
     { name: "Government patient ", count: 80, icon: <AdminPanelSettings fontSize="large" color="secondary" />, color: "#E3F2FD", textColor: "secondary" },
     { name: "Non-Government patient", count: 60, icon: <AccountCircle fontSize="large" color="primary" />, color: "#E8F5E9", textColor: "primary" },
+    { name: "New Registration ", count: 80, icon: <PersonAddAlt1 fontSize="large" color="success" />, color: "#FFF8E1", textColor: "#0C7B93" },
+    { name: "Revisited", count: 20, icon: <Visibility fontSize="large" color="warning" />, color: "#F3E5F5", textColor: "#0C7B93" },
 ];
 const liveCountData = [
     { name: "Officer", count: 150, icon: <AssignmentInd fontSize="large" color="info" />, color: "#E3F2FD", textColor: "info" },
